@@ -1,0 +1,1057 @@
+---
+title: "Module 1: Data Structures in R"
+output:
+  html_document: default
+---
+
+```{r}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+
+__EPA 1315 -- Data Analysis and Visualization__ 
+
+In the first module of the course you will be learning essential concepts for programming in R. You'll use these concepts later in the course for exploratory data analysis, and for building simulations. You'll also be able to apply these ideas when programming other languages, such as Python. Furthermore, you will build on these ideas in later courses in the curriculum.
+
+We will cover data structures over the course of three weeks. During these three weeks you will
+
+* Learn the basic elements of the R language
+* Store, structure, format and report data 
+* Develop scripts using functional and object-oriented styles of programming
+
+Where appropriate throughout these three weeks we will also demonstrate how similar capabilities can be implemented in the Python language. 
+
+Your knowledge of this module will be assessed with a programming challenge. You are asked to create an agent which will participate in a tournament with other agents, including those of your instructor and your classmate. Together the agents will play an Iterated Prisoner's Dilemma. This programming challenge is worth 10% of your final grade.
+
+Furthermore there will be a formal final exam for the course. This module will contribute theory questions concerning matrix properties, and matrix algebra. The final exam is worth 50% of the grade; matrix algebra and data structures may be up to 40% of the final. 
+
+## Using this Notebook
+In addition to working through these exercises in class, I hope that this document can be a reference document for you. You will find that the same patterns emerge again and again in your R code. You may memorize the command. More likely as you progress you will have notebooks or cheatsheets as references, like this one, 
+
+
+***
+
+# Lecture 1: Integrated Development Environments
+> Introduced on Tuesday, 5th September
+
+Lecture one involves some prior set up, so that you can load R Studio, and get to where you can create R scripts and R Markup. Once these initial steps are completed, and there is sufficient familiarity with the integrated development envivronment (IDE) we can proceed with coding examples. We'll also discuss the set-up of the course.
+
+Prior to starting on the R programming in earnest, we will have done the following:
+
+* downloaded and installed the R language
+* discussed the R User Interface
+* provided a short R tutorial
+* used RStudio to create your own scripts
+
+## Brief Tutorial in R
+
+The seq statement creates a vector of 41 numbers ranging from -2 to 2 in 0.1 increments. We can assign this sequence to a vector (x), we can further transform the vector (y), and we can plot the functional relationship between the two. 
+
+```{r}
+x = seq( from =-2, to=2, by = 0.1)
+y = x^2
+plot(x,y,col="skyblue",type='l')
+```
+
+This lecture is equivalent to chapters 1 - 3 of "R in a Nutshell, 2nd Edition" by Joseph Adler, O'Reilly Media. This is not an assigned reading, but you may wish to purchase the book as a reference. 
+
+## R Style Guide
+
+You may find the following style guide useful as you progress through the cours.e 
+
+https://google.github.io/styleguide/Rguide.xml
+
+
+# Lecture 2: Basic Features of the R Language
+> To be Reviewed in Preparation of Friday, 8th September 
+
+During lecture 2 we will accomplish the following:
+
+* found new packages using man and archives
+* installed new capabilities to R using packages
+* discussed programming style and commenting
+* created your own R Markup documents 
+* Understand your working enviroment
+* Read and write from your computer or console
+* Develop a strategy for monitoring and debugging your scripts
+
+We will also introduce the topic of modeling, which is the purpose for why we are using R. This lecture is equivalent to chapters 4 and 11 of Adler. 
+
+As you can see below each box in grey is an active chunk of code. You can run these inside the notebook, or you can cut and paste the code (without the box '''{r} ''') and it will run inside an R script.
+
+## First Things First
+
+Before we begin, let's talk about assignment. Assignment is when you assign values to variables. This process of giving names to data and variables enables us to create generalized procedures for coding. It's really at the heart of statistical computing, and coding in general. The native R way of doing this is with the arrow operator. 
+
+```{r}
+a <- 1
+```
+
+The example above assigns the value of 1 to the variable name a. People new to the R language find this a little strange. A lot of other languages use equals signs instead. Despite this, you can express the same thing with an equal sign instead. 
+
+```{r}
+a = 2
+```
+
+The designers of R originally wanted to keep assignment and association as two diferent things, and that's why they separated these two operators. To the extent that there is a difference, you use the "=" sign for parameters, and you use the "<-" sign when working with variables. We'll discuss parameters and functions in more detail later. 
+
+
+## Working Directories
+
+You're going to want to have a single folder where you put your scripts, notebooks, and data. Maybe you also want subdirectories as well. You can set your working directory by menu or by command lind. By menu you go to Session, then Set Working Directory then Choose Directory. You can also do this directly by command. 
+
+Note that directories are always represented with a forward slash "/" even on Windows.
+
+So for instance, on my computer, I have a directory just for this course. I can use the command setwd() as follows. The long directory name is known as an absolute reference to the directory, because it lists every directory and subdirectory between my home directory C:/ and here. 
+
+```{r}
+# setwd("C:/Users/localadmin/My Documents/Data Science Course")
+```
+
+You can also use relative directory information. This tells the system how to go from its current directory to here. 
+
+```{r}
+# This is my current start-up location
+setwd("C:/Users/LocalAdmin/Documents/")
+
+# This is where I want to steer to
+setwd("~/Data Science Course")
+```
+
+## Printing Comments to Screen
+
+You'll often want to print to screen or console. As we will discuss this is a simple and effective way of debugging your code. You can place print statements in appropriate places, and see how the execution of your script is progressing. 
+
+```{r}
+print("Here's how you print to screen")
+```
+
+Different types of data print differently. We'll soon talk about data types. Numbers and letters are clearly different. If you want to print both on one line you have to use a cat statement. 
+
+```{r}
+a = 100
+cat("The value of a is",a)
+```
+
+## Entering Data in R
+
+If you have small amounts of data, you may want to type it in directly in the console. The following example is from Adler. This uses R's "column" notation. 
+
+```{r}
+salary <- c(18700000,14626720,14137500,13980000,1291666)
+position <- c("QB","QB","DE","QB","QB")
+team <- c("Colts","Patriots","Panthers","Bengals","Giants")
+name.last <- c("Manning","Brady","Pepper","Palmer","Manning")
+name.first <- c("Peyton","Tom","Julius","Carson","Eli")
+```
+
+You can see the data as a list of variable names with associated values in the Value panel of your Environment. Note that R sees whether the data is numerical (num) or character (chr) and shows you the associated data type.
+
+We'll be talking in a lot more detail soon about data frames, but for now, its sufficient to know that we can group our data into columns in a spreadsheet like format. Use the following commands to do this:
+
+```{r}
+top.5.salaries <- data.frame(name.last,name.first,team,position,salary)
+```
+
+You can now find this data frame in your global environment. You can click on the spreadsheet symbol to open this up and see it in a spreadsheet like environment,
+
+Typing like this outputs it to console. 
+
+```{r}
+top.5.salaries
+```
+
+Here I save it to file, but more on that later!
+```{r}
+write.csv(top.5.salaries, "C:/Users/LocalAdmin/Documents/Data Science Course/Data/top.5.salaries.csv")
+```
+Typing like this brings it in a pop-up window.
+
+```{r}
+# View is in caps!
+View(top.5.salaries)
+```
+
+## Editing Your Data in Screen
+
+Maybe also you want to edit your data using a text editor, as opposed to putting it in the console. Here's how you do it.
+
+```{r}
+top.5.salaries <- edit(top.5.salaries)
+```
+
+This pops up a data editor. I dropped off a digit on the salary of Manning -- it out to be 12916666. Now is a good time to change it. You have to assign your edits to a new variable or it won't be saved. If you don't want to name your edits, you can just use fix() instead. 
+
+```{r}
+fix(top.5.salaries)
+```
+
+You can also fix vectors, but it will open a text editor instead. 
+
+```{r}
+fix(name.last)
+```
+
+As a final note, the Data Editor looks a little different depending on your operating system. This is because R is making use of your native windowed environment to generate the editor. 
+
+
+
+
+
+## Saving and Loading R Objects
+You can save and load your work from file. The following chunk of code sets our working directory. Then it moves to the Data directory, and saves our new data frame "top.5.salaries."
+
+```{r}
+setwd("C:/Users/LocalAdmin/Documents/Data Science Course/Data")
+save(top.5.salaries,file="top.5.salaries.RData")
+
+```
+You get a little warning message in red when running this in notebook. You won't see that running the command in a script.  We can also load that data back into memory. 
+
+```{r}
+load("C:/Users/localadmin/My Documents/Data Science Course/Data/top.5.salaries.RData")
+
+```
+
+## Importing Data from External Files
+
+Download the file "top.5.salaries.csv" from Brightspace. First, open it up in Notepad or equivalent text editor, and take a look.  Put the file in an appropriate directory and you are ready to run the following code block. 
+
+```{r}
+top.5.salaries1 <- read.table(file="C:/Users/LocalAdmin/Documents/Data Science Course/Data/top.5.salaries.csv", sep=",", header=TRUE,allowEscapes=TRUE)
+```
+
+This is probably the first function we have seen with a lot of options available for specifying the exact behavior you want. So this is worth discussing in more detail. The file attribute tells R where to find the file. The separator describes what separates one column from the next. The header lets R know whether there are column names. Allow escapes tells R whether it should take non-printable characters such as carriage returns as formatting (TRUE) or as genuine features of the data (FALSE).
+
+
+## Exporting Data
+We already discussed saving data objects. Data objects are native to R. But if we need to communicate between programs it is better to export the raw data. You can do this with the write.table function.
+
+```{r}
+write.table(top.5.salaries,file="C:/Users/localadmin/My Documents/Data Science Course/Data/top.5.salaries.csv",
+            sep=",",eol="\n",col.names=TRUE,row.names=FALSE)
+```
+
+The file attribute tells you where to place the file. The separator option tells you what character to use when separating columns. Commas are preferred, but some will use tabs. The end of line option tells you what to use at the end of each line. Here we put a carriage return, which is a non-printing character represented by "\n". We can also specify whether to put in row names and column names. There are many more options, but if you don't specify these they will default to some pre-set choices.In addition to write table, you will also encounter wrapper functions like csv() and csv2(). These are short-hand for specific bundles of options. 
+
+## Importing Data from Databases
+
+We're not going to discuss relational databases in this course, but you should know a little about them. Its not unusual for large companies or web sites to maintain records in a database. Databases require strict structuring of the data, but in turn permit you to restructure the data on the fly, develop reports, and query the data. In a certain sense you can already do that in R, but many applications in addition to R can access a database. 
+
+A good way of getting started with databases is to download the RODBC package. RODBC stands for R Open DataBase Connectivity. 
+
+### Exercise 1
+Please check out the Brightspace discussion area. Your exercise is to crowd-source data from a small number of Europe's largest rail stations. Together you and others in the class will create a more comprehensive data set of public rail stations. 
+
+# Lecture 3:  Data Structures and Control Loops in R
+> To be Reviewed in Preparation of Wednesday 13th September
+
+During this third lecture you will learn how to:
+* Create expressions in R
+* Understand data types
+* Control programs using loops, iterators and logical tests
+* store and structure data using data structures
+* manage empty or unitialized records
+* learn about arrays and matrices as special classes of data structure
+* learn about compound data structures, like lists of lists and dictionaries of dictionaries
+
+This is equivalent to chapters 5 and 6 of Adler. More coverage is given of compound data sources, and array operations.
+
+## Expressions and Operators
+Everything in R is an expression. Example expressions include assignment statements, conditional statements, and arthmetic expresions.
+
+```{r}
+x <- 1
+if (x > 2) "yes" else "no"
+127 %% 19
+```
+
+If you are not familiar with that last expression "%%", it involves "modulo." Basically it says after you are done dividing through by a number, return the remainder. So this expression says divide 127 by 10 and return the remainder. It returns 7. 
+
+You can use a range of numerical operations, including addition, multiplication, exponentiation and modulus.
+
+```{r}
+# addition
+1+19
+
+# multiplication
+4*5
+
+# modulus
+41 %% 21
+
+# exponents
+20^1 
+
+```
+
+You may remember the order of operations from algebra. This also applies in R. The order of operations are
+
+* functions and grouping using parentheses
+* arithmetic
+* comparisons
+* assignment
+
+There is a lot more information about the order of assignent, but this simple start should be sufficient for now. 
+
+## Variables, Symbols and Types
+There are five basic types of data in R. These are called "atomic classes." There are five atomic classes: logical, integer, numeric, complex, character.
+
+```{r}
+# logical data types
+logic_var1 <- TRUE
+logic_var2 <- FALSE
+
+# integer data types
+int_var1 <- 0
+int_var2 <- 1
+int_var3 <- 2
+
+#double data types 
+num_var1 <- 23.2
+num_var2 <- 93.1
+
+# complex data types
+complex_var1 <- 1+0i
+complex_var2 <- 1+4i
+
+# character data types
+char_var1 <- "SWC"
+char_var2 <- "Delft"
+
+```
+
+
+Double data types are the most frequently encountered. However characters and integers are not unusual. Character data is often encountered as categorical or nominal variables. Integers are also encountered in categorical data, but are also frequently seen in handling or iterating through data. Likewise, logical data is most seen in control statements for your code. We'll see them later in control statements. I personally have not required complex variables in any of the R work that I have done. Data types are assigned to variables, which are called symbols in R. 
+
+You'll sometimes need to check what data types you are actually working with. Use the following command. Typeof returns the atomic class (or type) of the data.
+
+```{r}
+typeof(logic_var1)
+typeof(complex_var1)
+typeof(num_var1)
+```
+
+You will sometimes want to force one data type into another. R will oblige, when possible. 
+
+```{r}
+complex_var3 <- as.complex(int_var2)
+num_var3 <- as.numeric(int_var3)
+typeof(num_var3)
+```
+
+Here is a short word on the difference between integers and double data types. Double data types require extra storage to store decimal points. This extra storageis very important if you need a high degree of numerical precision in your calculations. R will naturally convert numbers into double, unless you are specific about wanting integers. 
+
+There are special values in R to cover various corner cases. 
+
+```{r}
+missing_value <- NA
+not_available <- NA
+infinity <- Inf
+negative_infinity <- -Inf
+overflow <- 2^1024
+underflow <- 1 / 0
+not_a_number <- NaN
+no_sense <- overflow-underflow
+```
+
+```{r}
+overflow
+underflow
+not_a_number
+
+```
+There are symbols to cover missing data, which is "not available." Numerical calculations can result in infinity, so we also have a symbol for that. Finally there are results which just can't be calculated. These are stored in the "Not a Number" value.
+
+## R Interpreter
+
+When you work with R, you are addressing an interpreter. The interpreter translates your language into a form that your PC or laptop can operate with. You can see the responses of the interpret in your console. The interpreter is also numbering all your groups (or chunks of code.) There is a little symbol at the bottom left of your R Markdown document which shows this. 
+
+This contrasts with compiled languages, which are compiled once into executables. At that point you have code which directly addresses your PC or laptop in machine language. You will probably be able to transfer compiled code between similar operating systems and processors, without need of a interpreter. It will probably run faster as well. However compilable code is often "low level" meaning we need to do a lot of work to get a usable analysis. 
+
+## Basic Data Structures, Including Vectors 
+There are many data structures in R. These include vectors, lists and named lists, factors, matrices, and data frames.Let's go through each of these in turn.
+
+### Vectors and Lists
+
+If your data is one-dimensional, and the order of the items matters, you either want a vector or a list. A vector contains elements which are all the same data type -- like doubles or characters. A list let's you store elements which have different types.
+
+stores the double data type, and a list stores character data. Other than what is being stored, vectors and lists look a lot alike. You may already know how to create these data types. 
+
+```{r}
+# double vector
+long_lat <- c(52,4.35)
+
+# character vector
+days_of_week <- c("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
+
+# list
+long_lat_loc <-c(52,4.35,"Delft")
+
+
+```
+
+As you can see you use the column operator c() to specify the contents of the vector in order. Or you can use the list() command to create a list. If you want to you can name the fields of the list. In this example, we created a triplet of longitude, latitude and location name. 
+
+Here's a few more examples that you might want to use or understand for your coding challenge. 
+
+```{r}
+
+# we can put options in a list
+# This is an always cooperate strategy
+strategy1 <- c("cooperate","cooperate")
+# This is an always defect strategy 
+strategy2 <- c("defect","defect")
+# this is a mixed strategy
+strategy3 <- c("cooperate","defect")
+#depending on what options we choose we might cooperate or defect
+
+# we can pair agents for a match
+# here agents are given ids
+# the vectors describe which agents will be selected to compete
+match1 <- c(1,2)
+match2 <- c(9,5)
+
+```
+
+If you want to access an element of the data structure, you refer to the element by its order in the list. Note that Python numbers from one -- the first element of the list is one. (Other languages, like Python, start counting at zero.)
+
+
+```{r}
+long = long_lat[1]
+long
+third_day = days_of_week[3]
+third_day
+
+```
+
+Here is how you initialize a list. Do this if you need to make an empty list, and you are not sure yet what to put in it. We use NULL as a placeholder. Later a proper value can be entered.  
+
+
+```{r}
+
+# here is how you initialize empty lists and vectors
+
+# This vector is empty
+empty_vector1 <- c()
+# This vector has null elements
+empty_vector2 <- c(NULL,NULL)
+
+# this list is empty
+empty_list1 <- list()
+# this list has two null elements
+empty_list2 <- list(NULL, NULL)
+# this list has eight null entries
+empty_list <- vector("list",8)
+
+
+```
+
+Here are some operations you can do with lists including finding their length, and adding and removing new elements. 
+
+```{r}
+
+hurricanes1 <- c("Arlene","Bret","Cindy","Don","Emily","Franklin","Gert","Harvey")
+hurricanes2 <- hurricanes1
+
+# find the length of the list
+i=length(hurricanes1)
+i
+
+# append one item to the end of the list, using indices
+j = i+1
+hurricanes1[j]<-"Irma"
+hurricanes1
+
+# this also works
+partial_hurricanes <-c(hurricanes2,"Irma")
+partial_hurricanes
+
+# append multiple elements to the end of the list
+new_hurricanes <- c("Irma","Jose")
+all_hurricanes <- append(hurricanes2, new_hurricanes)
+all_hurricanes
+
+# you can also take items off the list
+popped_hurricanes <- all_hurricanes[-1]
+popped_hurricanes
+```
+
+A few words of explanation are needed on taking things off the list. (Some people call this "popping" the list.)
+The -1 index is used to mean remove the first available item. Note that we always copy a list, so unless you assign the list to a name your changes won't be permanent. 
+
+
+You can create vectors out of sequences. The following block gives you two ways of using sequences to produce a vector of numbers. The first way shows the start and end-points of the sequence. The second way also adds the amount to increment between the values.
+
+```{r}
+# you can create vectors out of sequences
+m <- 1:10
+m
+
+# another more versatile way to create a vector
+n <- seq(from =1, to=10,by=0.2)
+n
+
+```
+Another thing you can do is to shuffle a list. This is useful to create a simple randomizer. (We'll soon be talking about probability distributions in Module 2, as well.) Here's some example
+
+```{r}
+
+# create a vector from one to six
+m <- 1:6
+m
+
+# randomize the vector
+m <- sample(m)
+m
+
+# choose the first element in the list
+m[1]
+```
+
+## Named Lists
+
+Lists and vectors are good for when you want to store objects in a specific order. In other cases though, you will want to have a data structure where you can request specific sorts of information. The R answer to this is the named list.
+
+```{r}
+
+# named list
+long_lat_loc <-list(long=52,lat=4.35,loc="Delft")
+long_lat_loc$loc
+
+```
+
+In the example above we have a triplet where we store the longitude, latitude and location of a particular place. We can then ask for a specific piece of data (the location) using the $ operator. 
+
+Here's another example, involving scientific literature. Suppose we were storing information about scientific articles. We could define a list with places to store the author, the title, the journal and the year. Later we could retrieve any one of those fields, for instance retrieving the year.
+
+```{r}
+
+my_author = 'Rosariah, D.'
+my_title = 'Upper arm circumference measurement for detecting overweight and obesity in children aged 6-7 years'
+my_journal = 'PAEDIATRICA INDONESIANA'
+my_year = '2017'
+
+article <- list(author=my_author,title=my_title,journal=my_journal,year=my_year)
+
+# get a specific named value out of the list
+article$year
+
+```
+
+Other languages, like Python, have a data structure called dictionaries. Dictionaries have keys, and you can use these keys to retrieve the specific values. So dictionaries and named lists have a lot in common. Named lists and dictionaries differ because dictionaries require that the keys all be unique -- you can't repeat any of the names, or the values will just get reassociated. There are packages ("hash") which recreate a more fully functional dictionary in R. 
+
+```{r}
+# add a new named element to our list
+article1<-c(article,volume=57)
+article2<-c(article1,volume=57)
+
+# find all the keys for this list
+names(article1)
+# we added the named element twice!
+names(article2)
+
+# get all the values out of the list
+article1
+
+# is there a key called volume in this list
+'volume' %in% names(article1)
+```
+
+
+This example is a little simplified. But the data structure really becomes useful once we make lists of lists. So we might have a whole collection of articles, and each individual article might have these fields we could reference. There is more on lists of lists below.
+
+## Matrices
+An matrix is a data type for storing arrays of numbers. In a certain sense a matrix is just a special kind of list -- a list with a number of rows, and a number of columns. As you know, matrices are used in many domains of scientific and engineering computing. So its handy to know how to generate a matrix, and to perform operations on a matrix.
+
+There are many ways of creating a matrix. One technique lists all the elements, column wise, then later sizes the array. The elements then form the matrix.
+
+```{r}
+# create a vector of numbers
+a1 <-1:10
+a2 <- a1
+# then dimension it with (nrow,ncol)
+dim(a1) <- c(2,5)
+a1
+```
+
+Another way of creating the matrix involves using a constructor. 
+
+```{r}
+b <- matrix(a2,nrow=2,ncol=5)
+b
+```
+You can even make an empty matrix and fill it later.
+
+```{r}
+c <- matrix(nrow=2,ncol=5)
+c[1,1]=0
+c
+```
+
+Notice how we specified the element in the first row, and first column of the matrix? You can retrieve any particular row or column of the matrix that way. Just leave the row entry, or the column entry blank. R then retrieves the whole vector.
+
+```{r}
+# retrieve the first row
+b[1,]
+# retrieve the first column
+b[,1]
+```
+You can also collapse your matrix down to a vector again. 
+
+```{r}
+# b is a matrix
+b1 <- c(b)
+# b1 got collapsed down to a list
+b1
+```
+
+As you might expect, you can do various operations on your matrices.
+
+```{r}
+# here is how you transpose a matrix
+bt <- t(b)
+bt
+# here is how you multiply two matrices
+# this is known as the matrix inner product
+bb <- bt %*% b
+bb
+
+# you can also calculate the inverse of a matrix
+z <- matrix(1:4,nrow=2,ncol=2)
+zinv <- solve(z)
+zinv
+```
+
+Matrix multiplication requires that the two matrices be conformable -- that is the ncol of the first matrix must be equal to the nrow of the second matrix. The resultant matrix is sized nrow (first matrix) by ncol (second matrix).
+
+Finding the inverse of a matrix requires that the matrix be square (same number of columns and rows). Some matrices are poorly conditioned -- there is no defined inverse. In these cases R will present an error. 
+
+You can also column or row bind two different matrices together. 
+```{r}
+c <- cbind(bt,bb)
+c
+```
+
+This just "pasted" the columns of bb after the columns of bt. Its also possible to row bind as well using rbind().
+
+```{r}
+d <- rbind(b,bb)
+d
+```
+
+## Factors
+
+R is first and foremost a statistical language. It therefore specializes in representing data. A lot of data is categorical or nominal in character. R captures these kind of data through the use of factors. 
+
+A classic example of nominal variables are hair color and eye color. The following chunk creates a factor for us out of four observations of hair and eyes. 
+
+```{r}
+hair_color <- c("black","brown","red","yellow")
+hair_factor <- factor(hair_color)
+eye_color <- c("blue","brown","brown","green")
+eye_factor <- factor(eye_color)
+```
+
+If you check out your global environment you will see that factors are no longer just character datta, but instead have levels -- distinct values. In the case of hair color, R recognizes that it has seen four distinct possibilities in the data. Each of these possibilities, or levels, is given a number as well as the name we assigned it. Let's see if we can coerce R into showing us how factors have both numerical as well as text elements.
+
+```{r}
+as.numeric(hair_factor)
+as.character(hair_factor)
+
+```
+
+Ok so that example took a factor, and broke it into its two parts -- a numerical representation, and a character representation. Some statistical analyses which operate on categorical variables are more easily implemented if we can get the numerical values of the factors. But R will still want to report using the names you gave the variables. 
+
+### Exercise 2
+
+Here is a flow diagram of possible trajectories of the Dutch educational system. Create five students who have progressed through the educational system and have now completely graduated. Choose your own variables, and possible values that this variable can take. Enter this data by console or data editor. Be ready to justify your choice about the selection of variables. 
+
+![The Dutch Education System](C:/Users/localadmin/Documents/Data Science Course/Data/DutchEd.png)
+
+## Data Frames
+
+We're going to discuss data frames more fully in the next lecture. So let's leave this for now. A data frame is a complex data type, involving vectors, as well as column names and row names. A lot of practical data analysis and data cleaning run using data frames, so it pays to learn how to use data frames. Fortunately a lot of what you have already learned also applies to working with data frames. 
+
+## Dates
+
+Dates are not actually a basic type in R. They involve a mixture of different data types, bound together for convenience. Although they are not basic, they're nonetheless very useful! Here is a brief discussion of creating and using dates. 
+
+```{r}
+# what is today's date
+today <- Sys.Date()
+today
+
+# dates are actually number of days since 1 January 1970
+as.integer(today)
+
+# you can type in a string and convert it to a date -- year-month-day
+last_day_str <- '2017-12-31'
+end_of_year <- as.Date(last_day_str)
+end_of_year
+
+# you can substract dates, for instance to find out durations
+num_days <- end_of_year - today
+# its kind of cool that this gets annotated
+num_days
+
+# you can perform logical tests
+last_day_summer <- as.Date('2017-09-22')
+last_day_summer
+# here we find out if the date is later than end of summer 2017
+later <- (today > last_day_summer)
+later
+```
+
+### Compound Data Structures, Such as Lists of Lists
+
+You can make more complicated structures which combine these data types and data structures. Perhaps the most common combination is to make a list, which also contains a list.
+
+```{r}
+contest1 <- c(1,2)
+contest2 <- c(3,4)
+contest3 <- c(5,6)
+tournament <-c(contest1,contest2,contest3)
+```
+
+In the previous example we paired up six agents (numbered 1 to 6) to compete in a contest. Since each agent gets to participate once, we can make three contests. The tournament is then a list of all the paired contests between the agents. 
+
+
+```{r}
+# confirm that there are six agents in the list
+length(tournament)
+# get the first contest
+contest1 <- tournament[1]
+# get the first contestant in the first contest
+first_contestant <-contest1[1]
+first_contestant
+```
+
+
+
+```{r}
+
+```
+
+## Control Loops
+
+There are three basic control structures in R. Control structures organize the flow of your script. You  may want to evaluate the results of your analysis, and then perform additional tasks according to the results. This is called a conditional. Or you might want to keep processing until your results are of a desired quality. This is called a while loop. Or you might want to do something a set number of times. For instance, you might want to process each record, or you might want to loop through a matrix. This is called a for loop. Here are quick examples of each. 
+
+### Conditional Tests
+
+Here is a simple if/then test. 
+```{r}
+
+test1 <- TRUE
+if (test1) {
+  print("The test was true")
+} else {
+  print("the test was false")
+}
+```
+
+Only one statement will be executed, depending on the result of the test. You can provide more than two options by nesting your if/else.  
+
+```{r}
+
+number = 72
+
+if (number < 50) {
+  print("Number is less than fifty")
+} else {
+  if (number < 75) {
+    print("Number is between fifty and seventy-five")
+  }
+  else {
+    print("Number is greater than seventy-five")
+  }
+}
+```
+
+Still different is to use "else if"" statements. These let you make options with more than two possibilities. Can you tell how this control loop will evaluate? Which statement will be printed? 
+
+```{r}
+
+test_expression1 = TRUE
+test_expression2 = TRUE
+test_expression3 = TRUE
+
+if (test_expression1) {
+  print("Statement 1")
+} else if (test_expression2) {
+  print("Statement 2")
+} else if (test_expression3) {
+  print("Statement 3")
+} else
+  print("Statement 4")
+```
+### While Loop
+
+A while loop keeps running while something is true. In the following statement we are going to create a vector, shuffle it, print the first element, then remove that element from the list. This is a sort of queue. In the following script notice how e have to convert the numeric variable to a string in order to print it. 
+
+```{r}
+# create a vector of numbers 1 to 10
+a <- 1:10
+# shuffle it
+a <- sample(a)
+while (length(a) > 0) {
+  my_string = as.character(a[1])
+  print(my_string)
+  a <- a[-1]
+}
+# The vector is now empty 
+a
+```
+
+### For Loops
+
+Here's a simple example of doing something ten times. 
+
+```{r}
+
+for (i in 1:10) {
+  my_string = as.character(i)
+  print(my_string)
+}
+
+```
+
+In this example we fill a matrix, element by element. This illustrates nesting our for statements, to fully loop through a matrix. 
+
+```{r}
+# Be careful to size your matrix correctly!
+X_Matrix <- matrix(nrow=10,ncol=5)
+for (i in 1:10) {
+  for (j in 1:5) {
+    X_Matrix[i,j]=i*j
+  }
+}
+
+X_Matrix
+```
+
+### Exercise 3. Create a Tournament
+
+This exercise tests your knowledge of control loops and data structures. Here is an example of why you might want to make a compound data structure such as a list of lists. This example will be used later when we build our agent tournament. Suppose we had ten agents, and these agents where identified by their unique numbers one to ten. We want each agent to be able to participate in the tournament exactly 100 times. We don't want the agent to play against itself. How could we set this up?
+
+Try to write the script first, then find the answer on Brightspace in the tournament.R script. 
+
+# Lecture 4: Data Frames
+> To be Reviewed in Preparation of Wednesday, 13th September
+
+During Lecture 4 you will:
+* learn about data frames as a complex data type, crucial to data analysis
+* deal with missing data
+* transform data between formats
+* query data structures to get the information you need
+
+This is equivalent to chapters 7 and 12 of Adler. 
+
+
+
+## Creating a Data Frame
+
+A data frame is a complex data structure with some of the functionality of an Excel spreadsheet, or a database table. In the following examples I present two ways of creating a data frame. The first method starts with pre-existing lists, gives those lists names, then groups them to create a data frame. The second method creates a data frame incrementally, by adding on the rows. 
+
+## Creating Data Frames by Adding Columns
+
+The following data frame demonstrates how we can store and look-up the payoffs associated with an Iterated Prisoner's Dilemma. The dilemma delivers different payoffs to players depending on whether they cooperate with one another, or defect from their agreements. The dilemma is a classic example of individual interest trumping the needs of the group or the community. 
+
+```{r}
+x = c("cooperate","cooperate","defect","defect")
+y = c("cooperate","defect","cooperate","defect")
+z = c(1,-2,2,-1)
+w = c(1,2,-2,-1)
+df <- data.frame("bid1"=x,"bid2"=y, payoff1 = z, payoff2 = w)
+df
+```
+
+Other data structures could also work here -- we could for instance create a dictionary of dictionaries. Nonetheless data frame might be the cleanest, most interpretable, and easiest means of displaying and accessing the results. 
+
+This approach to creating a data frame requires that you have all the data ready for your data frame. It also requires that you address the data frame by column, while it is often more conventional to think of your data frame as a collection of cases, stored in row. The example is therefore someone impractical.  The second example allows us to create a data frame, row by row. 
+
+## Creating a Data Frame by Adding Rows 
+
+In this example we create a data frame, called "dat." We initialize the data frame with the column names, and the data types associated with each column. This creates an empty data frame ready to take additional data of the specified types. 
+
+The data frame will be useful for keeping track of our bidding process which occurs during the agent tournament. We will take the IDs of the agents (id1, id2) and add it to the record. We will also take the trade number, a unique number to track every single interaction between agents. The bid variables are character variables. Here we store the record of respective interactions, such as "cooperate" or "defect."
+
+```{r}
+dat <- data.frame("id1"=integer(),"id2"=integer(),"tradeno"=integer(),"bid1"=character(),"bid2"=character())
+dat = rbind(dat,data.frame("id1"=1,"id2"=2,"tradeno"=1,"bid1"="cooperate","bid2"="cooperate"))
+dat = rbind(dat,data.frame("id1"=1,"id2"=3,"tradeno"=2,"bid1"="cooperate","bid2"="defect"))
+dat = rbind(dat,data.frame("id1"=2,"id2"=3,"tradeno"=3,"bid1"="cooperate","bid2"="defect"))
+dat = rbind(dat,data.frame("id1"=3,"id2"=1,"tradeno"=4,"bid1"="defect","bid2"="defect"))
+dat
+```
+
+After initializing the data frame we can add new rows to the data frame using the rbind(), or "row bind" operation. The output of the script, with initialized data frame and two bound rows is shown above. We'll use a data frame of this format next week as a means of keeping a record of our agent tournament.
+
+## Data Frame
+
+
+In this example we are going to intialize a data frame using existing comma separated files. In this next example we read in a comma-separated file, containing data. Find this file on Brightspace, save it in the appropriate directory, and try the commands below.
+
+```{r}
+HGNdf = read.csv("C:/Users/LocalAdmin/Documents/Data Science Course/Data/HGN.csv")
+str(HGNdf)
+typeof(HGNdf)
+```
+
+
+This shows that the data was read into a data frame, which is a useful but complex data type we will be learning more about soon. It contains multiple columns, each with potentially different data types -- factors or ints.  
+
+In the following examples we take slices of the data frame. 
+
+```{r}
+print(HGNdf[1,])
+```
+
+
+```{r}
+print(HGNdf[1])
+```
+
+
+```{r}
+print(HGNdf[1,1])
+```
+
+Here is an example where we write the data back to our disk. 
+
+```{r}
+my_file = "C:/Users/LocalAdmin/Documents/Data Science Course/Data/HGN1.csv"
+write.csv(HGNdf, file=my_file, row.names=FALSE, quote=FALSE)
+```
+
+### Exercise 4
+Last lecture you took a survey about your prior experience in programming and scripting. The results are now available! You can find the data and the survey key on Brightspace. I'd like you to download this data, put it in a directory of your choice. Now load it into R and visually explore this in the data viewer. 
+
+Some other things you can try. Try the summary(data) command, where data is the name of your loaded data table. This will provide you with some quick descriptive statistics of the data. Discuss and interpret the results. 
+
+## Save the data frame to file
+
+You can save data structures directly to file. This is known as serializing. 
+
+
+```{r}
+my_file1 = "C:/Users/LocalAdmin/Documents/Data Science Course/Data/small_frame.rds"
+my_file2 = "C:/Users/LocalAdmin/Documents/Data Science Course/Data/small_frame1.rds"
+#dat <- readRDS(my_file1)
+#saveRDS(dat,file=my_file2)
+#dat <- readRDS(my_file)
+```
+
+You can also save your work as RStudio files, which save an extended record of your session and environment (not shown).
+
+
+
+***
+
+# Lecture 5: Functions and Objects 
+> To Be Reviewed for Friday, 15th October
+
+During this lesson you will
+
+* create functions of your own
+* create objects of your own 
+* write data structures to file using JSON
+* Learn about human readable files using YAML
+* serialize objects
+
+You need to work ahead on this assignment, so that you can submit your coding assignment in time. This is equivalent to chapters 8, 9 and 10 of Adler. Chapter 8 is only covered lightly. 
+
+## Querying Data Frames
+
+You can query a data frame to find particular records of interest. One way of doing this is with the subset() command. One motivation for this is to find all records concerning a specific agent. We might for instance want to know if it has an upright history of cooperation with others. In the following example we find all the cases in the database where agent 1 participated as the first agent. 
+
+```{r}
+history <-subset(dat, id1 == 1)
+history
+```
+
+This example is overly simplistic. Every interaction requires two agents, and there is no particular significance to being the first or the second agent. Therefore we might want to expand the query, also using the subset function. 
+
+```{r}
+history <-subset(dat, id1 == 1 | id2 == 1)
+history
+```
+
+Here we make two clauses with which to subset the data -- find all cases where agent 1 is either the first or the second agent participating in the tournament. Here's another example of this same functionality, of finding records which fulfill multiple conditions. Suppose we wanted to know how much to award agents where both agents cooperated with one another. The query would look like this. 
+
+```{r}
+payoffs <-subset(df, bid1 == "cooperate" & bid2 == "cooperate")
+```
+
+The answer, shown above, shows that both agents receive a single unit of payoff. These data tables will be used more fully in the agent tournament next week. Data frames are also a critical component to data science in R in general. 
+
+## Extended Example of Querying a Data Frame
+
+To use this example be sure to download the book data frame from the blackboard, place it in the appropriate directory, and alter the directory location specified in the scripts below. I placed the data directly under the D:/ directory, to simplify discussion. You should have a working folder instead, to keep your results clean and organized.
+
+```{r}
+book1 <- readRDS(file="C:/Users/LocalAdmin/Documents/Data Science Course/Data/data.rds")
+
+## Here we get a summary
+summary(book1)
+
+## Here we count the number of times a strategy is used for all agents
+defect_records1 = length(subset(book1,bid1=="defect" ))
+defect_records2 = length(subset(book1,bid2=="defect"))
+cooperate_records1  = length(subset(book1,bid1=="cooperate"))
+cooperate_records2 = length(subset(book1,bid2=="cooperate"))
+
+# We sum up the strategy totals
+defect = defect_records1+defect_records2
+cooperate = cooperate_records1 + cooperate_records2
+
+# We report the percentage
+percent_defection = defect/(defect+cooperate)
+percent_defection
+
+# later we will learn how to generate random numbers
+# for now let's try an alternative where we use the select statement
+
+```
+
+
+## Creating Objects Using the R6 Package 
+
+The following thumbnail illustrates how to create an object in R, using the R6 package. 
+
+```{r}
+library(R6)
+
+Person <- R6Class("Person",
+                  public = list(
+                    name = NULL,
+                    hair = NULL,
+                    initialize = function(name = NA, hair = NA) {
+                      self$name <- name
+                      self$hair <- hair
+                      self$greet()
+                    },
+                    set_hair = function(val) {
+                      self$hair <- val
+                    },
+                    greet = function() {
+                      cat(paste0("Hello, my name is ", self$name, ".\n"))
+                    }
+                  )
+)
+```
+
+These and other features of the R6 package are quickly and effectively described at https://cran.r-project.org/web/packages/R6/vignettes/Introduction.html
+
+## Serializing Objects 
+
+You can save objects to file, then restore them later. When you restore the object you can give it a new name.  
+
+```{r}
+saveRDS(Person, file="C:/Users/LocalAdmin/Documents/Data Science Course/Data/person")
+Person1 <- readRDS(file="C:/Users/LocalAdmin/Documents/Data Science Course/Data/person")
+geerten <- Person1$new("Geerten","yellow")
+```
+
+This is going to be particularly important when we create the agent tournament. We will save your agents -- all unique objects -- locally on a server. Then we will load them into memory, giving each a unique name. Then we can address the agents, asking each to individually and multiply participate in the tournament.
+

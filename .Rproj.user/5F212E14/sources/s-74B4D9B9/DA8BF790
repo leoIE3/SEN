@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512033987234.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DA8BF790",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1512033987234,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "D2C3E008",
+        "caption" : "phase",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=phase&cache_key=D2C3E008",
+        "displayedObservations" : 621,
+        "environment" : "",
+        "object" : "phase",
+        "preview" : 0,
+        "totalObservations" : 621,
+        "variables" : 4
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
