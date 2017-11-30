@@ -4,7 +4,7 @@
 ####################################################################
 
 # experiment with dropping off the header
-mydata=read.csv("C:/Users/LocalAdmin/Documents/pop.csv",skip=18)
+mydata=read.csv("Data/pop.csv",skip=18)
 
 # $ is an accessor -- find the named column "x"in mydata
 t <- mydata$x
@@ -20,13 +20,13 @@ df <- data.frame(t,sheep,wolves)
 # Descriptive Statistics of the Data
 ##################################################################
 summary(df)
-indexWithMaxNumSheep = which.max(df$sheep)
-df$sheep[indexWithMaxNumSheep]
+indexWithMaxNumSheep = which.max(df$sheep) #line that gives max
+df$sheep[indexWithMaxNumSheep] #what is the value of the max line
 
 ##################################################################
 # Line Plots and Histograms
 ##################################################################
-hist(sheep,breaks=20,col='blue')
+hist(sheep,breaks=40,col='blue')
 
 plot(t,sheep)
 plot(t,sheep,type='l',col='red')
@@ -35,9 +35,14 @@ lines(t,wolves,col='green')
 #################################################################
 # Iterators and Phase Plots 
 #################################################################
-i = length(sheep)
-last_wolf = ''
+i = length(sheep) #rows in variable
+last_wolf = '' #initialize 
 new_wolf = ''
+last_sheep =''
+new_sheep=''
+#for every time step iterate j
+#if time step >1 create index k
+
 for (j in 1:length(t)) {
   
   if (j > 1) { 
